@@ -10,6 +10,17 @@
                 http://www.springframework.org/schema/tx 
                 http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
    
-   <context:component-scan base-package="com.lovis"></context:component-scan>             
+   <context:component-scan base-package="com.lovis"></context:component-scan>   
+   
+   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+   		<property name="location" value="classpath:jdbc.properties"></property>
+   </bean>
+   
+   <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+   		<property name="driverClass" value="${driver}"></property>
+   		<property name="jdbcUrl" value="${url}"></property>
+   		<property name="user" value="${user}"></property>
+   		<property name="password" value="${password}"></property>
+   </bean>          
 
 </beans>                
