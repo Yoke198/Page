@@ -17,7 +17,6 @@
    </bean>
    
    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-   		
    		<property name="driverClass" value="${driver}"></property>
    		<property name="jdbcUrl" value="${url}"></property>
    		<property name="user" value="${user}"></property>
@@ -31,9 +30,22 @@
    		<property name="maxStatements" value="0"></property>
    		<property name="maxStatementsPerConnection" value="0"></property>
    		<property name="maxIdleTime" value="1800"></property>
-   </bean>       
+   </bean>
    
-      
+   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+   		<property name="dataSource" ref="dataSource"></property>
+   		<!-- 扫描并解析配置文件 -->
+   		<property name="mapperLocations" value="classpath:com/lovis/mapper/*.xml"></property>
+   </bean> 
+   
+   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+   		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+   		<property name="basePackage" value="com.lovis.mapper"></property>
+   </bean>   
+   
+   <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+   		<property name="dataSource" ref="dataSource"></property>
+   </bean>   
 
 </beans>      
 
